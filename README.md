@@ -1,16 +1,6 @@
-# Fotoprzyroda
+# Dzisiaj w przyrodzie
 
-Codzienna strona terenowa dla fotografa przyrody.
-
-Instrukcja publikacji na GitHub Pages:
-
-1. Zaloguj się na [github.com](https://github.com).
-2. Utwórz nowe repozytorium (np. `fotoprzyroda`).
-3. Wgraj zawartość tego folderu (`index.html` i `README.md`) do repozytorium.
-4. Wejdź w zakładkę `Settings > Pages`, wybierz branch (`main`) i folder `/root`.
-5. Kliknij „Save”.
-
-Strona będzie dostępna pod adresem:  
-**https://twojanazwa.github.io/fotoprzyroda**
+Nie wiesz, po co warto dzisiaj wyjść w teren? Ta strona powie Ci, co dzisiaj dzieje się w świecie przyrody, podzieli się wskazówkami fotograficznymi i zasugeruje miejscówki.
 
 Udanych zdjęć! 🌿📸
+www.instagram.com/przyslonka
