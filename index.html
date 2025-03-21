@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Fotoprzyroda – Co dziś w naturze?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Georgia, serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 2rem;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+        .event {
+            margin-bottom: 2em;
+            padding: 1em;
+            background-color: #f0f5f0;
+            border-left: 5px solid #2f4f2f;
+            border-radius: 4px;
+        }
+        .event h2 {
+            margin-top: 0;
+            font-size: 1.4em;
+            color: #2f4f2f;
+        }
+        .no-event {
+            font-style: italic;
+            color: #666;
+        }
+        .nav-buttons {
+            margin-bottom: 2em;
+        }
+        button {
+            background-color: #2f4f2f;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            margin-right: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #244024;
+        }
+        .date-display {
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Co dzieje się w naturze?</h1>
+        <div class="nav-buttons">
+            <button onclick="changeDay(-1)">← Poprzedni dzień</button>
+            <button onclick="changeDay(1)">Następny dzień →</button>
+        </div>
+        <div class="date-display" id="dateDisplay"></div>
+        <div id="events"></div>
+    </div>
+    <script>
+        const events = [{"title": "Tropy na śniegu (ssaki)", "start": "2025-01-10", "end": "2025-02-09", "description": "Świetny czas na tropienie dzikich ssaków – tropy są wyraźne na śniegu.\n\nWskazówki fotograficzne: Fotografuj tropy z kontekstem – ścieżki, las, poranna rosa.\n\nSiedliska: Lasy, pola, łąki."}, {"title": "Okres godowy wilków", "start": "2025-01-22", "end": "2025-02-05", "description": "Początek rui – watahy są bardziej mobilne i głośne.\n\nWskazówki fotograficzne: Obserwacja możliwa tylko zdalnie lub tropieniem.\n\nSiedliska: Duże kompleksy leśne."}, {"title": "Początek rui lisów", "start": "2025-01-28", "end": "2025-02-02", "description": "Lisie „szczekanie”, gonitwy, oznaczanie terenu.\n\nWskazówki fotograficzne: Świt, zmierzch, obrzeża pól i lasów."}, {"title": "Sowy – początek godów", "start": "2025-01-15", "end": "2025-01-20", "description": "Pierwsze nawoływania samców – puchacz, uszatka, płomykówka.\n\nWskazówki fotograficzne: Sylwetki na tle księżyca, nocne nagrania głosów."}, {"title": "Ptaki przy karmnikach", "start": "2025-01-08", "end": "2025-01-13", "description": "Sikory, dzięcioły, kowaliki, jemiołuszki – intensywne żerowanie.\n\nWskazówki fotograficzne: Zbliżenia z naturalnym tłem, portrety."}, {"title": "Kulminacja godów sów", "start": "2025-02-12", "end": "2025-02-17", "description": "Nocne nawoływania – intensyfikacja aktywności godowej.\n\nWskazówki fotograficzne: Statyw, długi czas naświetlania, kontrast z księżycem."}, {"title": "Powroty czapli i czarnego bociana", "start": "2025-02-25", "end": "2025-03-02", "description": "Pierwsze ptaki zajmują rewiry i zaczynają budować gniazda.\n\nWskazówki fotograficzne: Kolonie czapli – ujęcia w locie, na gnieździe."}, {"title": "Zimorodki – aktywność terytorialna", "start": "2025-02-20", "end": "2025-02-28", "description": "Samce patrolują brzegi rzek, śpiewają i wybierają terytoria.\n\nWskazówki fotograficzne: Z maskowania, ujęcia na gałęzi przy brzegu."}, {"title": "Zaloty u krogulców i myszołowów", "start": "2025-02-18", "end": "2025-03-04", "description": "Loty godowe, nawoływania, walki o rewiry.\n\nWskazówki fotograficzne: Poranne światło, otwarte przestrzenie."}, {"title": "Pierwsze przyloty skowronków", "start": "2025-02-27", "end": "2025-03-04", "description": "Zwiastuny wiosny – skowronki śpiewają wysoko nad polami.\n\nWskazówki fotograficzne: Ujęcia w locie lub na tle ziemi."}, {"title": "Gody żurawi – tańce i trąbienie", "start": "2025-03-15", "end": "2025-03-29", "description": "Efektowne tańce godowe i trąbienie żurawi po powrocie z zimowisk.\n\nWskazówki fotograficzne: Fotografuj z czatowni o świcie, mgła i odbicia w wodzie, teleobiektyw 400mm+.\n\nSiedliska: Podmokłe łąki, torfowiska, rozlewiska.\nLokalizacje: Biebrza, Polesie, Dolina Baryczy, Mazury."}, {"title": "Kulminacja godów sów", "start": "2025-03-12", "end": "2025-03-17", "description": "Samce nawołują nocą, zajmują rewiry. Puchacz, uszatka i płomykówka w pełnej aktywności.\n\nWskazówki fotograficzne: Sylwetka sowy na tle księżyca, statyw, wysokie ISO.\n\nSiedliska: Lasy, parki, ruiny, cmentarze."}, {"title": "Tokowiska dzięciołów", "start": "2025-03-20", "end": "2025-04-03", "description": "Samce bębnią intensywnie, poszukując partnerek i dziupli.\n\nWskazówki fotograficzne: Nasłuchuj bębnienia, obserwuj dziuple, kadry z profilu.\n\nSiedliska: Lasy liściaste, parki."}, {"title": "Zimorodki – początek godów", "start": "2025-03-25", "end": "2025-04-02", "description": "Samce zimorodków przynoszą samicom ryby, wybierają miejsce na norę.\n\nWskazówki fotograficzne: Fotografuj z maskowania przy wodzie. Ujęcia z rybą w dziobie.\n\nSiedliska: Piaszczyste skarpy nad rzekami."}, {"title": "Migracje gęsi, kaczek, siewek", "start": "2025-03-18", "end": "2025-03-25", "description": "Ogromne klucze przelatujące przez Polskę – widowisko dźwięku i ruchu.\n\nWskazówki fotograficzne: Z czatowni lub otwartego pola, kadry szerokie i detale.\n\nLokalizacje: Dolina Wisły, Biebrza, stawy Małopolski i Wielkopolski."}, {"title": "Lęgi żurawi", "start": "2025-04-10", "end": "2025-04-20", "description": "Pary zakładają gniazda na bagnach, często w trudno dostępnych miejscach.\n\nWskazówki fotograficzne: Obserwuj z dystansu. Mgła i poranne światło idealne.\n\nSiedliska: Mokradła, torfowiska, rozlewiska."}, {"title": "Zimorodki – kopanie nory i gody", "start": "2025-04-15", "end": "2025-04-29", "description": "Para kopie tunel w skarpie, intensywne zaloty.\n\nWskazówki fotograficzne: Ustaw czatownię z daleka. Fotografuj loty i pary.\n\nSiedliska: Strumienie z odkrytym brzegiem."}, {"title": "Gody płazów – żaby i ropuchy", "start": "2025-04-05", "end": "2025-04-19", "description": "Wędrówki do zbiorników wodnych, koncerty rechotów.\n\nWskazówki fotograficzne: Fotografuj w nocy z latarką, niska perspektywa, odbicia w wodzie.\n\nSiedliska: Leśne kałuże, rowy, oczka wodne."}, {"title": "Śpiew skowronków i kosów", "start": "2025-04-12", "end": "2025-04-26", "description": "Samce intensywnie śpiewają z otwartych przestrzeni.\n\nWskazówki fotograficzne: Świt, kontrastowe światło, kadry z dołu.\n\nSiedliska: Pola, łąki, parki."}, {"title": "Powroty bocianów – naprawa gniazd", "start": "2025-04-20", "end": "2025-04-25", "description": "Bociany wracają i zaczynają budować/odnawiać gniazda.\n\nWskazówki fotograficzne: Fotografuj z poziomu gniazda (np. z okna). Kadry z gałęziami w dziobie.\n\nSiedliska: Wsze, łąki, pola."}, {"title": "Zimorodki – składanie jaj i wysiadywanie", "start": "2025-05-10", "end": "2025-05-18", "description": "Samica znosi jaja, para wysiaduje je naprzemiennie.\n\nWskazówki fotograficzne: Obserwuj z dystansu, uchwyć przyloty do nory.\n\nSiedliska: Rzeki z piaszczystymi skarpami."}, {"title": "Lęgi ptaków śpiewających", "start": "2025-05-15", "end": "2025-05-29", "description": "Intensywne karmienie piskląt i drugie lęgi.\n\nWskazówki fotograficzne: Złota godzina, czatownia, portrety karmiących rodziców.\n\nSiedliska: Ogrody, parki, lasy liściaste."}, {"title": "Narodziny młodych wilków", "start": "2025-05-05", "end": "2025-05-10", "description": "Wilczyce rodzą w legowiskach w głębokim lesie.\n\nWskazówki fotograficzne: Tylko zdalna obserwacja (fotopułapki).\n\nSiedliska: Dziewicze kompleksy leśne."}, {"title": "Kozły sarny – poroże w scypule", "start": "2025-05-12", "end": "2025-05-17", "description": "Świeżo uformowane poroże samców – miękkie, efektowne.\n\nWskazówki fotograficzne: Poranne światło, niska perspektywa, zarośla.\n\nSiedliska: Skraje pól i lasów."}, {"title": "Budowa gniazd przez jaskółki i jerzyki", "start": "2025-05-18", "end": "2025-05-23", "description": "Intensywne loty z materiałem do gniazd.\n\nWskazówki fotograficzne: Ćwicz panoramowanie, próbuj ujęć z szerokim kadrem.\n\nSiedliska: Zabudowania, mosty, elewacje."}, {"title": "Zimorodki – karmienie piskląt", "start": "2025-06-10", "end": "2025-06-20", "description": "Intensywne karmienie młodych rybami.\n\nWskazówki fotograficzne: Ujęcia z rybą w dziobie, z czatowni.\n\nSiedliska: Rzeki, strumienie z odkrytym brzegiem."}, {"title": "Młode ptaki opuszczają gniazda", "start": "2025-06-15", "end": "2025-06-25", "description": "Nieporadne ptaki uczą się samodzielności – łatwe do obserwacji.\n\nWskazówki fotograficzne: Uchwyć karmienie i interakcje rodziców z młodymi.\n\nSiedliska: Parki, brzegi lasów."}, {"title": "Jelonek rogacz – okres godowy", "start": "2025-06-20", "end": "2025-07-04", "description": "Samce wspinają się na drzewa, walczą o samice.\n\nWskazówki fotograficzne: Kadry na tle pnia, z boku, wieczorne światło.\n\nSiedliska: Lasy dębowe z martwym drewnem."}, {"title": "Jelenie – poroże w scypule", "start": "2025-06-15", "end": "2025-06-20", "description": "Samce z miękkim porożem, spokojnie żerujące.\n\nWskazówki fotograficzne: Światło boczne, portrety w zaroślach.\n\nSiedliska: Lasy liściaste, łąki przy lesie."}, {"title": "Nietoperze – narodziny młodych", "start": "2025-06-25", "end": "2025-08-24", "description": "Samice rodzą w koloniach – wzmożona aktywność nocna.\n\nWskazówki fotograficzne: Fotopułapki, IR, bez płoszenia.\n\nSiedliska: Strychy, kościoły, jaskinie."}, {"title": "Ruja sarny", "start": "2025-07-25", "end": "2025-07-30", "description": "Samce intensywnie gonią samice – widowiskowe sceny na łąkach.\n\nWskazówki fotograficzne: Świt, niska perspektywa, łąka z mgłą.\n\nSiedliska: Pola, zarośla, skraje lasów."}, {"title": "Młode lisy i borsuki – eksploracja", "start": "2025-07-15", "end": "2025-07-25", "description": "Młode wychodzą coraz dalej – czas nauki i zabawy.\n\nWskazówki fotograficzne: Cierpliwość, czatownia, wieczorne światło.\n\nSiedliska: Łąki przy zadrzewieniach."}, {"title": "Zimorodki – karmienie drugiego lęgu", "start": "2025-07-20", "end": "2025-07-30", "description": "Drugi lęg, młode w norze, rodzice przynoszą ryby.\n\nWskazówki fotograficzne: Ujęcia z rybą w dziobie, lot do nory.\n\nSiedliska: Strumienie, rzeki."}, {"title": "Jerzyki – masowy odlot", "start": "2025-07-28", "end": "2025-08-02", "description": "Odlatują w chmarach – ostatnie dni ich obecności.\n\nWskazówki fotograficzne: Ujęcia nad dachami, w świetle zachodzącego słońca.\n\nSiedliska: Miasta, kamienice."}, {"title": "Muchołówki i gąsiorki – karmienie młodych", "start": "2025-07-22", "end": "2025-08-01", "description": "Ostatni okres karmienia przed migracją.\n\nWskazówki fotograficzne: Czatownia przy krzewach, kadry z owadem w dziobie.\n\nSiedliska: Zarośla, śródpolne krzewy."}, {"title": "Żurawie – rodziny na żerowiskach", "start": "2025-08-18", "end": "2025-08-23", "description": "Rodziny żurawi z młodymi żerują na ścierniskach i mokradłach.\n\nWskazówki fotograficzne: Świt, czatownia, niska perspektywa.\n\nSiedliska: Wilgotne łąki, ścierniska."}, {"title": "Zimorodki – młode uczą się polować", "start": "2025-08-12", "end": "2025-08-22", "description": "Młode zimorodki uczą się nurkowania i samodzielności.\n\nWskazówki fotograficzne: Portrety młodych, odbicia w wodzie.\n\nSiedliska: Strumienie, rzeki."}, {"title": "Zbieranie zapasów – gryzonie i wiewiórki", "start": "2025-08-25", "end": "2025-09-01", "description": "Gromadzenie orzechów i nasion na zimę.\n\nWskazówki fotograficzne: Portrety z pokarmem, niska perspektywa.\n\nSiedliska: Lasy, parki."}, {"title": "Wilki – młode uczą się polować", "start": "2025-08-20", "end": "2025-08-30", "description": "Młode dołączają do dorosłych, wataha bardziej mobilna.\n\nWskazówki fotograficzne: Fotopułapki, tropienie śladów.\n\nSiedliska: Dziewicze lasy."}, {"title": "Migracja siewek i kaczek", "start": "2025-08-22", "end": "2025-08-29", "description": "Początek jesiennej migracji ptaków wodno-błotnych.\n\nWskazówki fotograficzne: Czatownia przy zbiorniku, ujęcia szerokie i detale.\n\nLokalizacje: Stawy Milickie, Biebrza, Zatoka Pucka."}, {"title": "Rykowisko jeleni", "start": "2025-09-20", "end": "2025-10-11", "description": "Samce jelenia szlachetnego ryczą i walczą o haremy.\n\nWskazówki fotograficzne: Świt, mgła, sylwetki, kontrast.\n\nLokalizacje: Bory Dolnośląskie, Biebrza."}, {"title": "Zgromadzenia żurawi – przeloty", "start": "2025-09-22", "end": "2025-09-29", "description": "Żurawie zbierają się w grupach przed odlotem.\n\nWskazówki fotograficzne: Świt/zachód, odbicia w wodzie, czatownia.\n\nLokalizacje: Biebrza, Polesie, Dolina Noteci."}, {"title": "Migracje drapieżników", "start": "2025-09-15", "end": "2025-09-22", "description": "Przeloty myszołowów, błotniaków, krogulców.\n\nWskazówki fotograficzne: Otwarte przestrzenie, wzniesienia.\n\nLokalizacje: Dolina Wisły, Pogórze."}, {"title": "Początek bekowiska danieli", "start": "2025-09-28", "end": "2025-10-03", "description": "Pierwsze nawoływania samców – ciche jęki.\n\nWskazówki fotograficzne: Mgła, niska perspektywa, wieczorne światło.\n\nSiedliska: Lasy liściaste."}, {"title": "Sowy – aktywność przedzimowa", "start": "2025-09-18", "end": "2025-09-23", "description": "Młode sowy uczą się polować, więcej odgłosów nocą.\n\nWskazówki fotograficzne: Zmierzch, sylwetki na tle nieba.\n\nSiedliska: Parki, lasy, zadrzewienia."}, {"title": "Bekowisko danieli – kulminacja", "start": "2025-10-10", "end": "2025-10-31", "description": "Samce danieli nawołują i walczą o haremy.\n\nWskazówki fotograficzne: Świt, mgła, boczne światło.\n\nLokalizacje: Pomorze, Mazury, Lubuskie."}, {"title": "Szczyt przelotów gęsi i żurawi", "start": "2025-10-05", "end": "2025-10-12", "description": "Masowe przeloty ptaków wodnych – głosy, klucze na niebie.\n\nWskazówki fotograficzne: Szerokie ujęcia z krajobrazem lub detale w locie.\n\nLokalizacje: Dolina Baryczy, Polesie."}, {"title": "Czaty na myszołowy", "start": "2025-10-12", "end": "2025-10-17", "description": "Drapieżniki intensywnie polują przed zimą.\n\nWskazówki fotograficzne: Z auta, przy polach, słupy i żerowiska.\n\nSiedliska: Otwarte tereny."}, {"title": "Karmniki – pierwsze zimowe ptaki", "start": "2025-10-25", "end": "2025-10-30", "description": "Gile, sikory, jemiołuszki – ruch przy karmnikach rośnie.\n\nWskazówki fotograficzne: Naturalne tło, światło boczne, interakcje.\n\nSiedliska: Ogrody, parki."}, {"title": "Intensywne żerowanie saren i lisów", "start": "2025-10-18", "end": "2025-10-23", "description": "Ostatnie tygodnie gromadzenia energii przed zimą.\n\nWskazówki fotograficzne: Poranek, para z pyska, niskie światło.\n\nSiedliska: Skraje pól i lasów."}, {"title": "Końcówka bekowiska danieli", "start": "2025-11-05", "end": "2025-11-10", "description": "Ostatnie nawoływania i rozpadanie się haremów.\n\nWskazówki fotograficzne: Mgła, liście, światło poranne.\n\nSiedliska: Lasy liściaste."}, {"title": "Hibernacja nietoperzy i jeży", "start": "2025-11-15", "end": "2026-01-14", "description": "Większość już śpi – koniec aktywności.\n\nWskazówki fotograficzne: Dokumentacja zdalna, bez płoszenia.\n\nSiedliska: Jaskinie, strychy, sterty liści."}, {"title": "Pierwsze tropy na śniegu", "start": "2025-11-20", "end": "2025-12-20", "description": "Pierwszy śnieg – tropy jeleni, saren, wilków.\n\nWskazówki fotograficzne: Kadry z kontekstem, ślad przez las lub łąkę."}, {"title": "Ptaki przy karmnikach – rozruch", "start": "2025-11-10", "end": "2025-11-15", "description": "Sikory, dzięcioły, kowaliki – coraz większy ruch.\n\nWskazówki fotograficzne: Złote światło, naturalne tło, zbliżenia."}, {"title": "Migracja sów błotnych", "start": "2025-11-08", "end": "2025-11-15", "description": "Uszatki błotne pojawiają się w śródpolnych zadrzewieniach.\n\nWskazówki fotograficzne: Dzień, gałęzie, portrety z dystansu."}, {"title": "Sezon tropów na śniegu", "start": "2025-12-15", "end": "2026-01-14", "description": "Idealny czas do tropienia aktywnych nocą ssaków.\n\nWskazówki fotograficzne: Tropy z cieniem, kadry krajobrazowe."}, {"title": "Zimowe stada ptaków", "start": "2025-12-10", "end": "2025-12-15", "description": "Sikory, pełzacze, dzięcioły w mieszanych stadach.\n\nWskazówki fotograficzne: Obserwuj trasy przelotów, kadry z interakcji."}, {"title": "Jemiołuszki na jarzębinie", "start": "2025-12-20", "end": "2025-12-25", "description": "Efektowne ptaki w parkach i sadach.\n\nWskazówki fotograficzne: Zbliżenia z owocem w dziobie, kolorowe tło."}, {"title": "Lis polujący pod śniegiem", "start": "2025-12-18", "end": "2025-12-23", "description": "Skoki „na słuch” – widowiskowe łowy.\n\nWskazówki fotograficzne: Niska perspektywa, profil, seria zdjęć."}, {"title": "Zimorodki – aktywność zimowa", "start": "2025-12-08", "end": "2025-12-16", "description": "Jeśli zima łagodna, nadal aktywne nad wodą.\n\nWskazówki fotograficzne: Ujęcia z kontrastem lodu i wody, sylwetka nad rzeką."}];
+        let currentDate = new Date();
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function renderEvents() {
+            const todayStr = formatDate(currentDate);
+            document.getElementById("dateDisplay").textContent = "Data: " + todayStr;
+
+            const todaysEvents = events.filter(e => {
+                const start = new Date(e.start);
+                const end = new Date(e.end);
+                return currentDate >= start && currentDate <= end;
+            });
+
+            const container = document.getElementById("events");
+            container.innerHTML = "";
+
+            if (todaysEvents.length > 0) {
+                todaysEvents.forEach(e => {
+                    const el = document.createElement("div");
+                    el.className = "event";
+                    el.innerHTML = `<h2>${e.title}</h2><p>${e.description.replace(/\n/g, "<br>")}</p>`;
+                    container.appendChild(el);
+                });
+            } else {
+                const el = document.createElement("p");
+                el.className = "no-event";
+                el.textContent = "Brak konkretnych wydarzeń. Może warto poszukać tropów, dobrego światła albo... ciszy.";
+                container.appendChild(el);
+            }
+        }
+
+        function changeDay(offset) {
+            currentDate.setDate(currentDate.getDate() + offset);
+            renderEvents();
+        }
+
+        renderEvents();
+    </script>
+</body>
+</html>
